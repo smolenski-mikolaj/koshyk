@@ -17,12 +17,12 @@
     </section>
     <section class="text-center mt-6">
       <h2 class="font-semibold text-2xl">Planuj i kupuj</h2>
-      <p class="mt-4">Zarządzaj zakupami <br />szybko, łatwo i przyjemnie</p>
-      <Button class="mt-6">Zaloguj</Button>
+      <p class="mt-4 leading-snug font-light">
+        Zarządzaj zakupami <br />szybko, łatwo i przyjemnie
+      </p>
+      <div id="google-auth-btn" class="flex justify-center mt-8"></div>
     </section>
   </main>
 </template>
 
-<script>
-export default {};
-</script>
+<script lang="ts" setup></script>
