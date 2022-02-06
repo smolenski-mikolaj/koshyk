@@ -1,22 +1,22 @@
 {
   "name": "koshyk-app",
   "version": "1.0.0",
-  "private": true,
+  "license": "ISC",
+  "description": "",
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
     "start": "node .output/server/index.mjs"
   },
   "devDependencies": {
-    "@nuxtjs/svg": "^0.4.0",
     "@types/gapi.auth2": "^0.0.56",
-    "@vueuse/core": "^7.5.5",
     "autoprefixer": "^10.4.2",
     "nuxt3": "latest",
     "postcss": "^8.4.5",
     "tailwindcss": "^3.0.18"
   },
   "dependencies": {
+    "@nuxtjs/svg": "^0.4.0",
     "@pinia/nuxt": "^0.1.8",
     "pinia": "^2.0.11"
   }

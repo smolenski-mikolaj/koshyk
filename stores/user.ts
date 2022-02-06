@@ -1,21 +1,20 @@
 import { defineStore } from "pinia";
 
-const delay = (t: number) => new Promise((r) => setTimeout(r, t));
-
 interface User {
   id: number;
+  googleId: number;
   email: string;
   firstname: string;
   lastname: string;
   name: string;
   avatar: string;
-  lists: number;
 }
 
 export const useUserStore = defineStore("users", {
   state: () => ({
     user: {
       id: null,
+      googleId: null,
       email: "",
       firstname: "",
       lastname: "",
@@ -26,9 +25,19 @@ export const useUserStore = defineStore("users", {
   }),
   actions: {
     async login(userData: User) {
-      await delay(200);
-      // check if user exists in db. If not, create.
-      // then check if user has any list saved. If yes, get lists.
+      await useFetch(`http://localhost:4000/users/`, {
+        method: "post",
+        body: {
+          googleId: userData.id,
+          email: userData.email,
+          firstname: userData.firstname,
+          lastname: userData.lastname,
+          name: userData.name,
+          avatar: userData.avatar,
+        },
+      });
+
+      // now check if user has any list saved. If yes, get lists.
 
       this.auth(userData);
     },
