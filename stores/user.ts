@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 
 interface User {
-  id: number;
-  googleId: number;
+  id?: number;
+  googleId: string;
   email: string;
   firstname: string;
   lastname: string;
@@ -14,7 +14,7 @@ export const useUserStore = defineStore("users", {
   state: () => ({
     user: {
       id: null,
-      googleId: null,
+      googleId: "",
       email: "",
       firstname: "",
       lastname: "",
@@ -25,10 +25,10 @@ export const useUserStore = defineStore("users", {
   }),
   actions: {
     async login(userData: User) {
-      await useFetch(`http://localhost:4000/users/`, {
+      const { data: user } = await useFetch(`http://localhost:4000/users/`, {
         method: "post",
         body: {
-          googleId: userData.id,
+          googleId: userData.googleId,
           email: userData.email,
           firstname: userData.firstname,
           lastname: userData.lastname,
@@ -37,9 +37,22 @@ export const useUserStore = defineStore("users", {
         },
       });
 
-      // now check if user has any list saved. If yes, get lists.
+      const { data: lists } = await useFetch(
+        `http://localhost:4000/lists/${user.value.id}`
+      );
 
-      this.auth(userData);
+      this.auth({ ...userData, id: user.value.id });
+
+      console.log(lists.value);
+
+      if (lists.value === "OK") {
+        const router = useRouter();
+        router.push("main");
+      } else {
+        // redirect to "lists" in the future
+        const router = useRouter();
+        router.push("main");
+      }
     },
     async logout() {
       const auth2 = gapi.auth2.getAuthInstance();
@@ -69,9 +82,6 @@ export const useUserStore = defineStore("users", {
         name: userData.name,
         avatar: userData.avatar,
       };
-
-      const router = useRouter();
-      router.push("main");
     },
   },
 });

@@ -16,7 +16,7 @@ const userStore = useUserStore();
 const googleAuthSuccess = (googleUser) => {
   const profile = googleUser.getBasicProfile();
   const userData = {
-    id: profile.getId(),
+    googleId: profile.getId(),
     name: profile.getName(),
     firstname: profile.getGivenName(),
     lastname: profile.getFamilyName(),
