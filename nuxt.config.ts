@@ -14,6 +14,9 @@ export default defineNuxtConfig({
     },
   },
   buildModules: ["@nuxtjs/svg", "@pinia/nuxt"],
+  publicRuntimeConfig: {
+    apiURL: process.env.API_URL || "http://localhost:4000",
+  },
   meta: {
     meta: [
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -25,8 +28,7 @@ export default defineNuxtConfig({
       { name: "google-signin-scope", content: "profile email" },
       {
         name: "google-signin-client_id",
-        content:
-          "789296393296-tqki7pb88p6g9egg6ehrr9mitnhhc93s.apps.googleusercontent.com",
+        content: process.env.GOOGLE_CLIENT_ID,
       },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.svg" }],

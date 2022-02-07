@@ -8,11 +8,12 @@ interface User {
   lastname: string;
   name: string;
   avatar: string;
+  lists?: Array<{}>;
 }
 
 export const useUserStore = defineStore("users", {
   state: () => ({
-    user: {
+    user: <User>{
       id: null,
       googleId: "",
       email: "",
@@ -20,37 +21,26 @@ export const useUserStore = defineStore("users", {
       lastname: "",
       name: "",
       avatar: "",
-      lists: 0,
+      lists: [],
     },
   }),
   actions: {
-    async login(userData: User) {
+    async auth(idToken: string) {
       const { data: user } = await useFetch(`http://localhost:4000/users/`, {
         method: "post",
-        body: {
-          googleId: userData.googleId,
-          email: userData.email,
-          firstname: userData.firstname,
-          lastname: userData.lastname,
-          name: userData.name,
-          avatar: userData.avatar,
-        },
+        body: { idToken },
       });
 
-      const { data: lists } = await useFetch(
-        `http://localhost:4000/lists/${user.value.id}`
-      );
+      if (!user.value) {
+        return;
+      }
 
-      this.auth({ ...userData, id: user.value.id });
+      this.user = { ...user.value };
+      const router = useRouter();
 
-      console.log(lists.value);
-
-      if (lists.value === "OK") {
-        const router = useRouter();
-        router.push("main");
+      if (this.user.lists && this.user.lists.length > 0) {
+        router.push("lists");
       } else {
-        // redirect to "lists" in the future
-        const router = useRouter();
         router.push("main");
       }
     },
@@ -60,28 +50,18 @@ export const useUserStore = defineStore("users", {
 
       this.user = {
         id: null,
+        googleId: "",
         email: "",
         firstname: "",
         lastname: "",
         name: "",
         avatar: "",
-        lists: 0,
+        lists: [],
       };
 
       const router = useRouter();
       router.push("/");
-
       location.reload();
-    },
-    auth(userData: User) {
-      this.user = {
-        id: userData.id,
-        email: userData.email,
-        firstname: userData.firstname,
-        lastname: userData.lastname,
-        name: userData.name,
-        avatar: userData.avatar,
-      };
     },
   },
 });

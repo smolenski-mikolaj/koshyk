@@ -14,17 +14,8 @@ import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
 
 const googleAuthSuccess = (googleUser) => {
-  const profile = googleUser.getBasicProfile();
-  const userData = {
-    googleId: profile.getId(),
-    name: profile.getName(),
-    firstname: profile.getGivenName(),
-    lastname: profile.getFamilyName(),
-    avatar: profile.getImageUrl(),
-    email: profile.getEmail(),
-  };
-
-  userStore.login(userData);
+  const idToken = googleUser.getAuthResponse().id_token;
+  userStore.auth(idToken);
 };
 
 onMounted(() => {

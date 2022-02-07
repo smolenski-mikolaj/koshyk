@@ -29,9 +29,8 @@
     </section>
     <section class="text-center mt-8">
       <h3 class="font-semibold text-xl">Cześć</h3>
-      <h2 class="-mt-1 font-bold text-2xl">{{ userStore.$state.user.firstname }}!</h2>
-      <p class="mt-4 leading-snug">Dodaj nową listę <br />i zrób pierwsze zakupy</p>
-      <Button class="mt-8">Nowa lista</Button>
+      <h2 class="-mt-1 font-bold text-2xl">{{ user.firstname }}!</h2>
+      <p class="mt-4 leading-snug">{{ user.lists }}</p>
     </section>
   </main>
 </template>
@@ -40,4 +39,5 @@
 import { useUserStore } from "~/stores/user";
 
 const userStore = useUserStore();
+const user = userStore.$state.user;
 </script>
