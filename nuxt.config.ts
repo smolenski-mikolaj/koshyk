@@ -16,6 +16,7 @@ export default defineNuxtConfig({
   buildModules: ["@nuxtjs/svg", "@pinia/nuxt"],
   publicRuntimeConfig: {
     apiURL: process.env.API_URL || "http://localhost:4000",
+    googleClientId: process.env.GOOGLE_CLIENT_ID,
   },
   meta: {
     meta: [

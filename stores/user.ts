@@ -8,7 +8,13 @@ interface User {
   lastname: string;
   name: string;
   avatar: string;
-  lists?: Array<{}>;
+  lists?: Array<{
+    id: number;
+    name: string;
+    status: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }>;
 }
 
 export const useUserStore = defineStore("users", {
@@ -25,9 +31,28 @@ export const useUserStore = defineStore("users", {
     },
   }),
   actions: {
-    async auth(idToken: string) {
-      const { data: user } = await useFetch(`http://localhost:4000/users/`, {
+    async auth(apiURL: string) {
+      const { data: user } = await useFetch(`${apiURL}/users/`, {
+        credentials: "include",
+      });
+
+      if (user.value) {
+        this.user = { ...user.value };
+
+        const router = useRouter();
+        if (this.user.lists && this.user.lists.length > 0) {
+          router.push("lists");
+        } else {
+          router.push("main");
+        }
+      }
+
+      return user.value;
+    },
+    async googleAuth(apiURL: string, idToken: string) {
+      const { data: user } = await useFetch(`${apiURL}/users/`, {
         method: "post",
+        credentials: "include",
         body: { idToken },
       });
 
@@ -44,24 +69,57 @@ export const useUserStore = defineStore("users", {
         router.push("main");
       }
     },
-    async logout() {
-      const auth2 = gapi.auth2.getAuthInstance();
-      await auth2.signOut();
+    async logout(apiURL: string, clientId: string) {
+      await useFetch(`${apiURL}/users/logout`, {
+        credentials: "include",
+      });
 
-      this.user = {
-        id: null,
-        googleId: "",
-        email: "",
-        firstname: "",
-        lastname: "",
-        name: "",
-        avatar: "",
-        lists: [],
-      };
+      if (gapi.auth2) {
+        const auth2 = gapi.auth2.getAuthInstance();
+        await auth2.signOut();
 
-      const router = useRouter();
-      router.push("/");
-      location.reload();
+        this.user = {
+          id: null,
+          googleId: "",
+          email: "",
+          firstname: "",
+          lastname: "",
+          name: "",
+          avatar: "",
+          lists: [],
+        };
+
+        location.reload();
+      } else {
+        gapi.load("auth2", async () => {
+          await gapi.auth2.init({ client_id: clientId });
+          const auth2 = gapi.auth2.getAuthInstance();
+          await auth2.signOut();
+
+          this.user = {
+            id: null,
+            googleId: "",
+            email: "",
+            firstname: "",
+            lastname: "",
+            name: "",
+            avatar: "",
+            lists: [],
+          };
+
+          location.reload();
+        });
+      }
+    },
+    async createUserList(apiURL: string, listName: string) {
+      const { data: list } = await useFetch(`${apiURL}/lists/`, {
+        method: "put",
+        credentials: "include",
+        body: { listName },
+      });
+
+      console.log(list.value);
+      this.user.lists.push(list.value);
     },
   },
 });

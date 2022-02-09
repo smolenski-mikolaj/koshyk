@@ -1,7 +1,7 @@
 import { useUserStore } from "~/stores/user";
 
 export default defineNuxtRouteMiddleware((to) => {
-  if (to.path === "/") {
+  if (to.path === "/" || to.path === "/home") {
     return;
   }
 
