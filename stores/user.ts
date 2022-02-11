@@ -1,21 +1,5 @@
 import { defineStore } from "pinia";
-
-interface User {
-  id?: number;
-  googleId: string;
-  email: string;
-  firstname: string;
-  lastname: string;
-  name: string;
-  avatar: string;
-  lists?: Array<{
-    id: number;
-    name: string;
-    status: string;
-    createdAt: Date;
-    updatedAt: Date;
-  }>;
-}
+import { User } from "~/types/user";
 
 export const useUserStore = defineStore("users", {
   state: () => ({
