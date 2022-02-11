@@ -9,12 +9,11 @@ import "@/assets/css/tailwind.css";
 import { onMounted, nextTick } from "vue";
 import { useUserStore } from "@/stores/user";
 
-const config = useRuntimeConfig();
 const userStore = useUserStore();
 
 onMounted(() => {
   nextTick(async () => {
-    const user = await userStore.auth(config.apiURL);
+    const user = await userStore.auth();
 
     if (!user) {
       const router = useRouter();

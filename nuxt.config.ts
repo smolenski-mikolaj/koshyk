@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   },
   buildModules: ["@nuxtjs/svg", "@pinia/nuxt"],
   publicRuntimeConfig: {
-    apiURL: process.env.API_URL || "http://localhost:4000",
+    apiPort: process.env.API_PORT || "8000",
     googleClientId: process.env.GOOGLE_CLIENT_ID,
   },
   meta: {
@@ -41,4 +41,5 @@ export default defineNuxtConfig({
       },
     ],
   },
+  serverMiddleware: [{ path: "/api", handler: "~/api/index.ts" }],
 });

@@ -15,8 +15,8 @@ export const useUserStore = defineStore("users", {
     },
   }),
   actions: {
-    async auth(apiURL: string) {
-      const { data: user } = await useFetch(`${apiURL}/users/`, {
+    async auth() {
+      const { data: user } = await useFetch("/api/users/", {
         credentials: "include",
       });
 
@@ -33,8 +33,8 @@ export const useUserStore = defineStore("users", {
 
       return user.value;
     },
-    async googleAuth(apiURL: string, idToken: string) {
-      const { data: user } = await useFetch(`${apiURL}/users/`, {
+    async googleAuth(idToken: string) {
+      const { data: user } = await useFetch("/api/users/", {
         method: "post",
         credentials: "include",
         body: { idToken },
@@ -53,8 +53,8 @@ export const useUserStore = defineStore("users", {
         router.push("main");
       }
     },
-    async logout(apiURL: string, clientId: string) {
-      await useFetch(`${apiURL}/users/logout`, {
+    async logout(clientId: string) {
+      await useFetch("/api/users/logout", {
         credentials: "include",
       });
 
@@ -95,14 +95,13 @@ export const useUserStore = defineStore("users", {
         });
       }
     },
-    async createUserList(apiURL: string, listName: string) {
-      const { data: list } = await useFetch(`${apiURL}/lists/`, {
+    async createUserList(listName: string) {
+      const { data: list } = await useFetch("/api/lists/", {
         method: "put",
         credentials: "include",
         body: { listName },
       });
 
-      console.log(list.value);
       this.user.lists.push(list.value);
     },
   },

@@ -49,12 +49,12 @@ const userStore = useUserStore();
 const config = useRuntimeConfig();
 
 const user = userStore.$state.user;
-const logout = () => userStore.logout(config.apiURL, config.googleClientId);
+const logout = () => userStore.logout(config.googleClientId);
 
 const dialog = ref(false);
 const listName = ref("Moja lista");
 
 const createUserList = () => {
-  userStore.createUserList(config.apiURL, listName.value);
+  userStore.createUserList(listName.value);
 };
 </script>

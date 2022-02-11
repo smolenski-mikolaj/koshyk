@@ -28,12 +28,11 @@
 <script lang="ts" setup>
 import { useUserStore } from "@/stores/user";
 
-const config = useRuntimeConfig();
 const userStore = useUserStore();
 
 const googleAuthSuccess = (googleUser) => {
   const { id_token: idToken } = googleUser.getAuthResponse();
-  userStore.googleAuth(config.apiURL, idToken);
+  userStore.googleAuth(idToken);
 };
 
 onMounted(() => {

@@ -15,7 +15,9 @@
           src="~/assets/img/icons/chevron-left.svg"
           class="absolute w-[40px] h-[40px] top-6 left-4"
         /> -->
-        <div class="absolute left-0 top-0 w-full h-full flex justify-center items-center">
+        <div
+          class="absolute left-0 top-0 w-full h-full flex justify-center items-center"
+        >
           <img src="~/assets/img/logo/main.svg" class="h-[60px] mb-5" />
         </div>
         <img
@@ -58,12 +60,12 @@ const userStore = useUserStore();
 const config = useRuntimeConfig();
 
 const user = userStore.$state.user;
-const logout = () => userStore.logout(config.apiURL, config.googleClientId);
+const logout = () => userStore.logout(config.googleClientId);
 
 const dialog = ref(false);
 const listName = ref("Moja lista");
 
 const createUserList = () => {
-  userStore.createUserList(config.apiURL, listName.value);
+  userStore.createUserList(listName.value);
 };
 </script>
