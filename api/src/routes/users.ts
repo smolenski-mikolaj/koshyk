@@ -1,11 +1,10 @@
-import e, { Request, Response, Router } from "express";
+import { Request, Response, Router } from "express";
 import { HttpStatus } from "../helpers/http-status";
 import { User } from "../models/user";
 import { List } from "../models/list";
 import { OAuth2Client } from "google-auth-library";
 import config from "../config";
 
-const client = new OAuth2Client(config.googleClientId);
 const router = Router({ mergeParams: true });
 
 router.get("/", async (req: Request, res: Response) => {
@@ -26,6 +25,7 @@ router.post("/", async (req: Request, res: Response) => {
   const { idToken } = req.body;
 
   if (idToken) {
+    const client = new OAuth2Client(config.googleClientId);
     const ticket = await client.verifyIdToken({
       idToken,
       audience: config.googleClientId,

@@ -1,5 +1,7 @@
 <template>
-  <main class="absolute h-full w-full bg-blue flex flex-col items-center justify-center">
+  <main
+    class="absolute h-full w-full bg-blue flex flex-col items-center justify-center"
+  >
     <img src="~/assets/img/logo/main.svg" class="h-[84px]" />
   </main>
 </template>
@@ -12,13 +14,6 @@ import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
 
 onMounted(() => {
-  nextTick(async () => {
-    const user = await userStore.auth();
-
-    if (!user) {
-      const router = useRouter();
-      router.push("home");
-    }
-  });
+  userStore.auth();
 });
 </script>

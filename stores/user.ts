@@ -20,18 +20,18 @@ export const useUserStore = defineStore("users", {
         credentials: "include",
       });
 
+      const router = useRouter();
       if (user.value) {
         this.user = { ...user.value };
 
-        const router = useRouter();
         if (this.user.lists && this.user.lists.length > 0) {
-          router.push("lists");
+          router.push("/lists");
         } else {
-          router.push("main");
+          router.push("/main");
         }
+      } else {
+        router.push("/home");
       }
-
-      return user.value;
     },
     async googleAuth(idToken: string) {
       const { data: user } = await useFetch("/api/users/", {
@@ -48,9 +48,9 @@ export const useUserStore = defineStore("users", {
       const router = useRouter();
 
       if (this.user.lists && this.user.lists.length > 0) {
-        router.push("lists");
+        router.push("/lists");
       } else {
-        router.push("main");
+        router.push("/main");
       }
     },
     async logout(clientId: string) {
@@ -96,13 +96,15 @@ export const useUserStore = defineStore("users", {
       }
     },
     async createUserList(listName: string) {
-      const { data: list } = await useFetch("/api/lists/", {
-        method: "put",
-        credentials: "include",
-        body: { listName },
-      });
+      const router = useRouter();
+      router.push("/lists/1/categories");
+      // const { data: list } = await useFetch("/api/lists/", {
+      //   method: "put",
+      //   credentials: "include",
+      //   body: { listName },
+      // });
 
-      this.user.lists.push(list.value);
+      // this.user.lists.push(list.value);
     },
   },
 });
