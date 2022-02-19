@@ -6,11 +6,11 @@ export const useProductStore = defineStore("product", {
   }),
   actions: {
     async getProducts(categoryId: number) {
-      const { data } = await useFetch(`/api/products/${categoryId}`, {
+      const { data, error } = await useFetch(`/api/products/${categoryId}`, {
         credentials: "include",
       });
 
-      if (data.value === "unauthorized") {
+      if (error.value) {
         const router = useRouter();
         router.push("/home");
 

@@ -6,11 +6,11 @@ export const useCategoryStore = defineStore("categories", {
   }),
   actions: {
     async getCategories() {
-      const { data } = await useFetch("/api/categories/", {
+      const { data, error } = await useFetch("/api/categories/", {
         credentials: "include",
       });
 
-      if (data.value === "unauthorized") {
+      if (error.value) {
         const router = useRouter();
         router.push("/home");
 
