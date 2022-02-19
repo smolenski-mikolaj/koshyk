@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 
-export const useCategoryStore = defineStore("categories", {
+export const useProductStore = defineStore("product", {
   state: () => ({
-    categories: [],
+    products: [],
   }),
   actions: {
-    async getCategories() {
-      const { data } = await useFetch("/api/categories/", {
+    async getProducts(categoryId: number) {
+      const { data } = await useFetch(`/api/products/${categoryId}`, {
         credentials: "include",
       });
 
@@ -18,7 +18,7 @@ export const useCategoryStore = defineStore("categories", {
       }
 
       if (data.value) {
-        this.categories = [...data.value];
+        this.products = [...data.value];
       }
     },
   },

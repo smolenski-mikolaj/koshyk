@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import config from "./src/config";
 import routes from "./src/routes";
 import { sequelize } from "./src/db";
+import { auth } from "./src/middleware/auth";
 
 import { User } from "./src/models/user";
 import { List } from "./src/models/list";
@@ -33,6 +34,7 @@ app.use(
     cookie: { secure: mode !== "development" },
   })
 );
+app.use(auth);
 app.use(routes);
 
 sequelize.addModels([User, List, Category, Unit, Product]);

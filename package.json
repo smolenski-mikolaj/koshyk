@@ -9,11 +9,13 @@
     "start": "node .output/server/index.mjs"
   },
   "devDependencies": {
-    "@types/gapi.auth2": "^0.0.56",
     "@types/body-parser": "^1.19.0",
+    "@types/cookie": "^0.4.1",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.12",
     "@types/express-session": "^1.17.4",
+    "@types/gapi.auth2": "^0.0.56",
+    "@types/js-cookie": "^3.0.1",
     "@types/node": "^16.0.0",
     "@types/validator": "^13.7.1",
     "autoprefixer": "^10.4.2",
@@ -25,13 +27,16 @@
     "@nuxtjs/svg": "^0.4.0",
     "@pinia/nuxt": "^0.1.8",
     "body-parser": "^1.19.0",
+    "cookie": "^0.4.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "google-auth-library": "^7.11.0",
+    "js-cookie": "^3.0.1",
     "mysql2": "^2.3.3",
+    "pinia": "^2.0.11",
+    "pinia-plugin-persistedstate-2": "^1.0.0",
     "sequelize": "^6.15.0",
-    "sequelize-typescript": "^2.1.2",
-    "pinia": "^2.0.11"
+    "sequelize-typescript": "^2.1.2"
   }
 }

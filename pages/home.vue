@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <div>
     <section class="relative h-[60vh] overflow-hidden">
       <div
         class="absolute w-full h-full -top-14 -z-10 bg-blue scale-125 rounded-b-[200px]"
@@ -22,7 +22,7 @@
       </p>
       <div id="google-auth-btn" class="flex justify-center mt-8"></div>
     </section>
-  </main>
+  </div>
 </template>
 
 <script lang="ts" setup>

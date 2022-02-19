@@ -16,42 +16,33 @@ export const useUserStore = defineStore("users", {
   }),
   actions: {
     async auth() {
-      const { data: user } = await useFetch("/api/users/", {
+      const router = useRouter();
+
+      const { data } = await useFetch("/api/users/", {
         credentials: "include",
       });
 
-      const router = useRouter();
-      if (user.value) {
-        this.user = { ...user.value };
-
-        if (this.user.lists && this.user.lists.length > 0) {
-          router.push("/lists");
-        } else {
-          router.push("/main");
-        }
+      if (data.value) {
+        this.user = { ...data.value };
+        router.push("/main");
       } else {
         router.push("/home");
       }
     },
     async googleAuth(idToken: string) {
-      const { data: user } = await useFetch("/api/users/", {
+      const { data } = await useFetch("/api/users/", {
         method: "post",
         credentials: "include",
         body: { idToken },
       });
 
-      if (!user.value) {
+      if (!data.value) {
         return;
       }
 
-      this.user = { ...user.value };
+      this.user = { ...data.value };
       const router = useRouter();
-
-      if (this.user.lists && this.user.lists.length > 0) {
-        router.push("/lists");
-      } else {
-        router.push("/main");
-      }
+      router.push("/main");
     },
     async logout(clientId: string) {
       await useFetch("/api/users/logout", {
@@ -73,7 +64,9 @@ export const useUserStore = defineStore("users", {
           lists: [],
         };
 
-        location.reload();
+        setTimeout(() => {
+          location.reload();
+        }, 100);
       } else {
         gapi.load("auth2", async () => {
           await gapi.auth2.init({ client_id: clientId });
@@ -91,20 +84,11 @@ export const useUserStore = defineStore("users", {
             lists: [],
           };
 
-          location.reload();
+          setTimeout(() => {
+            location.reload();
+          }, 100);
         });
       }
-    },
-    async createUserList(listName: string) {
-      const router = useRouter();
-      router.push("/lists/1/categories");
-      // const { data: list } = await useFetch("/api/lists/", {
-      //   method: "put",
-      //   credentials: "include",
-      //   body: { listName },
-      // });
-
-      // this.user.lists.push(list.value);
     },
   },
 });

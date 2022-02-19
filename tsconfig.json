@@ -21,7 +21,9 @@
       "@types/express",
       "@types/express-session",
       "@types/node",
-      "@types/validator"
+      "@types/validator",
+      "@types/cookie",
+      "@types/js-cookie",
     ],
   },
 }

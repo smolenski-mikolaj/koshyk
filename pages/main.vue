@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <div>
     <section class="transition-all duration-300" :class="dialog && 'blur-sm'">
       <section class="relative h-[50vh] overflow-hidden">
         <div
@@ -34,7 +34,7 @@
         </p>
       </section>
       <Footer>
-        <Button @click.stop="dialog = true">Nowa lista</Button>
+        <ButtonMain @click.stop="dialog = true">Nowa lista</ButtonMain>
       </Footer>
     </section>
     <Dialog v-model="dialog">
@@ -44,23 +44,29 @@
         v-model="listName"
         class="mt-4 p-2 w-full rounded-lg border-dashed border border-black text-center focus:border-blue focus:outline-none"
       />
-      <Button @click="createUserList" class="mt-10">Dalej</Button>
+      <ButtonMain @click="createList" class="mt-10">Dalej</ButtonMain>
     </Dialog>
-  </main>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { useUserStore } from "~/stores/user";
+import { useListStore } from "~/stores/list";
+
+definePageMeta({
+  middleware: ["check-user-lists"],
+});
 
 const userStore = useUserStore();
+const listStore = useListStore();
 const config = useRuntimeConfig();
 
 const logout = () => userStore.logout(config.googleClientId);
 
 const dialog = ref(false);
-const listName = ref("Moja lista");
+const listName = ref(listStore.$state.name);
 
-const createUserList = () => {
-  userStore.createUserList(listName.value);
+const createList = () => {
+  listStore.createList(listName.value);
 };
 </script>
