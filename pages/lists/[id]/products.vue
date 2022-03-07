@@ -5,9 +5,13 @@
       :subtitle="listStore.$state.name"
     ></Header>
     <Content>
-      <p v-for="product in productStore.$state.products" :key="product.id">
+      <ButtonList
+        v-for="product in productStore.$state.products"
+        :key="product.id"
+        :checkbox="true"
+      >
         {{ product.name }}
-      </p>
+      </ButtonList>
     </Content>
     <Footer>
       <ButtonMain>Pokaż listę</ButtonMain>

@@ -16,16 +16,14 @@ export const useUserStore = defineStore("users", {
   }),
   actions: {
     async auth() {
-      const router = useRouter();
-
       const { data } = await useFetch("/api/users/", {
         credentials: "include",
       });
 
       if (data.value) {
         this.user = { ...data.value };
-        router.push("/main");
       } else {
+        const router = useRouter();
         router.push("/home");
       }
     },
