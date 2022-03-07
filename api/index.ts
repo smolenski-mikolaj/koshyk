@@ -38,6 +38,6 @@ app.use(auth);
 app.use(routes);
 
 sequelize.addModels([User, List, Category, Unit, Product]);
-sequelize.sync({ alter: mode === "development" });
+sequelize.sync();
 
 export default app;

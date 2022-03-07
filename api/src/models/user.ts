@@ -38,6 +38,8 @@ export class User extends Model<User> {
   @UpdatedAt
   updatedAt!: Date;
 
-  @HasMany(() => List)
+  @HasMany(() => List, {
+    onDelete: "CASCADE",
+  })
   lists?: List[];
 }
