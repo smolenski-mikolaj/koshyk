@@ -4,6 +4,6 @@
       <div class="w-[30px] h-[30px] bg-gray-100 rounded-full"></div>
     </div>
     <img src="~/assets/img/icons/bread.svg" />
-    <slot />
+    <slot></slot>
   </button>
 </template>

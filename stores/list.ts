@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useListStore = defineStore("list", {
   state: () => ({
-    id: "new",
+    id: 0,
     name: "Moja lista",
     category: "",
     categoryId: 0,
@@ -12,7 +12,7 @@ export const useListStore = defineStore("list", {
       this.name = listName;
 
       const router = useRouter();
-      router.push(`/lists/${this.id}/categories`);
+      router.push("/lists/new/categories");
     },
   },
 });
